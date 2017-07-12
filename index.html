@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="./cropper/cropper.min.css">
+    <link rel="stylesheet" href="./cutImage/cutImage.css">
+</head>
+
+<body>
+    <input type="file" id="upimg-base64">
+    <input type="file" id="upimg-blob">
+    <script type="text/javascript" charset="utf-8" src="./jquery.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="./cropper/cropper.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="./cutImage/cutImage.js"></script>
+    <script type="text/javascript">
+        $(function() {
+            $('#upimg-base64').cutImage({
+                aspectRatio: 3 / 4, //截图框比例，缺省值为 3/4
+                minedge: 384, //最小边数值，若为字符串'auto'则按图片原大小，缺省值为 720
+                blob: false, //回调函数返回参数是否为blob，缺省值为 false
+                mode: 'cut', //调用模式 cut：裁剪并压缩，compress：仅仅压缩大小，缺省值为 'cut'
+                cutFun: function(result) { //操作成功之后回调函数，cut模式为点击'确定裁剪'后触发，compress模式为图片压缩完成后触发
+                    // console.log(result);
+
+                    $('body').append('<img src="' + result + '">');
+                }
+            });
+            $('#upimg-blob').cutImage({
+                minedge: 'auto',
+                blob: true,
+                mode: 'compress',
+                cutFun: function(result) {
+                    console.log(result);
+                }
+            });
+        })
+    </script>
+</body>
+
+</html>
